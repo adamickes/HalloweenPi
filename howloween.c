@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <time.h>
 
 //Maximum wait (in seconds) between sounds
 #define RAND_MIN_WAIT 5
@@ -74,6 +75,9 @@ int gen_rand(int max)
 
 int main()
 {
+	//Seed rand() with current time
+	srand(time(NULL));
+	
     //Process events forever
 	int waitTime;
     while (1) {

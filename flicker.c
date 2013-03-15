@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 //Maximum flickers in a sequence
 #define RAND_MAX_FLICKERS 8
@@ -89,6 +90,9 @@ int main()
 		
 		//Turn on flicker pin
 		digitalWrite(FLICKER_PIN, 0);
+		
+		//Seed rand() with current time
+		srand(time(NULL));
 	
     	//Process events forever
     	int waitTime;
