@@ -22,7 +22,7 @@
 #define RAND_MIN_WAIT 5
 #define RAND_MAX_WAIT 12
 //Number of SFX files in the directory
-#define NUMBER_OF_FILES 104
+#define NUMBER_OF_FILES 101
 
 int gen_rand(int max);
 
@@ -30,7 +30,8 @@ void playRandomSound()
 {
 	char *file;
 	char *fileName;
-	char *fileLocation = "/home/pi/halloween/wav/";
+	char *fileLocation = "/home/pi/sfx/";
+	//printf ("test printf");
 	
 	pid_t x; 
 	int fileNumber = gen_rand((int)NUMBER_OF_FILES);
@@ -38,16 +39,16 @@ void playRandomSound()
 	DIR *pdir;
 	struct dirent *pent;
 
-	pdir=opendir("/home/pi/halloween/wav"); //"." refers to the current dir
+	pdir=opendir("/home/pi/sfx"); //"." refers to the current dir
 	if (!pdir){
 		printf ("opendir() failure; terminating");
 		exit(1);
 	}
 	errno=0;
 	while ((pent=readdir(pdir))){
-		//printf("%s", pent->d_name);
 		if (i==fileNumber) {
 			fileName = pent->d_name;
+			//printf ("%s\n",fileName);
 		}
 		i = i + 1;
 	}
@@ -61,9 +62,12 @@ void playRandomSound()
 	file = (char *)malloc(strlen(fileLocation) + strlen(fileName) +1);
 	strcpy(file,fileLocation);
 	strcat(file,fileName);
+	printf ("%s\n",file);
 	//Play the sound
 	x = fork();
-	execlp("aplay","aplay",file);
+	//execlp("aplay","aplay",file);
+	execlp("mpg123","mpg123",file);
+	//execlp("mpg123", "mpg123", "-q", file, 0); 
 }
 
 int gen_rand(int max)
