@@ -18,11 +18,11 @@
 #include <unistd.h>
 #include <time.h>
 
-//Maximum wait (in seconds) between sounds
-#define RAND_MIN_WAIT 5
-#define RAND_MAX_WAIT 12
+//Minimum and Maximum wait (in seconds) between sounds
+#define RAND_MIN_WAIT 10
+#define RAND_MAX_WAIT 25
 //Number of SFX files in the directory
-#define NUMBER_OF_FILES 101
+#define NUMBER_OF_FILES 90
 
 int gen_rand(int max);
 
@@ -62,12 +62,9 @@ void playRandomSound()
 	file = (char *)malloc(strlen(fileLocation) + strlen(fileName) +1);
 	strcpy(file,fileLocation);
 	strcat(file,fileName);
-	printf ("%s\n",file);
 	//Play the sound
 	x = fork();
-	//execlp("aplay","aplay",file);
 	execlp("mpg123","mpg123",file);
-	//execlp("mpg123", "mpg123", "-q", file, 0); 
 }
 
 int gen_rand(int max)
